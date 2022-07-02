@@ -3,17 +3,34 @@ const readline = require('readline').createInterface({
   input: process.stdin,
   output: process.stdout
 })
+const Cow = require('./controllers/index.js')
+
 let db;
 
 const path = require('path');
 
 const PORT = 3000;
 const app = express();
-
+app.use(express.json());
 app.use(express.static(path.join(__dirname, '..', 'public')));
 
-app.get('/', (req, res) => {
-  res.send('Hello from the server!');
+// app.get('/', (req, res) => {
+//   res.send('Hello from the server!');
+// })
+
+app.get('/api/cows', (req, res) => {
+  Cow.readAll()
+  .then((data) => {
+    res.json(data)
+    res.send(200).end()
+  })
+  .catch(err => alert(err))
+})
+
+app.post('/api/cows', (req, res) => {
+  Cow.createOne(req.body)
+  .then(() => res.status(201).end(`Your cow ${req.body.name} is saved!`))
+  .catch(() => res.status(400).end('Unable to save your cow :('))
 })
 
 app.listen(PORT, () => {
