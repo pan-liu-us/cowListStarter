@@ -9,9 +9,8 @@ mongoose.connect('mongodb://localhost:27017/cowList', (err)=>{
 });
 
 const cowSchema = new mongoose.Schema({
-  /*
-    Fill me in
-  */
+  name: {type: String, unique: true},
+  description: String
 })
 
 const Cow = mongoose.model('Cow', cowSchema);
