@@ -10,5 +10,13 @@ module.exports = {
     Cow.create({name, description});
     const all = Cow.find({});
     return all;
+  },
+
+  editOne: (id, name, description) => {
+    return Cow.findOneAndUpdate(id, {name: name, description: description});
+  },
+
+  deleteOne: (id) => {
+    return Cow.findByIdAndDelete(id);
   }
 }

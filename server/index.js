@@ -24,13 +24,25 @@ app.get('/api/cows', (req, res) => {
     res.json(data)
     res.send(200).end()
   })
-  .catch(err => alert(err))
+  .catch(err => console.log(err))
 })
 
 app.post('/api/cows', (req, res) => {
   Cow.createOne(req.body)
   .then(() => res.status(201).end(`Your cow ${req.body.name} is saved!`))
   .catch(() => res.status(400).end('Unable to save your cow :('))
+})
+
+app.put('/api/cows/:id', (req, res) => {
+  Cow.editOne(req.params.id, req.body.name, req.body.description )
+  .then(() => res.status(200).end(`Record updated!`))
+  .catch(() => res.status(404).end('Unable to update the record :('))
+})
+
+app.delete('/api/cows/:id', (req, res) => {
+  Cow.deleteOne(req.params.id)
+  .then(() => res.status(204).end(`You delete ${req.body.name}!`))
+  .catch(() => res.status(404).end(`Unable to delete the record :(`))
 })
 
 app.listen(PORT, () => {
