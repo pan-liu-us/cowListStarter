@@ -15,8 +15,7 @@ class CowListEntry extends React.Component {
     this.handleNameClick = this.handleNameClick.bind(this);
   }
 
-  handleCowDelete(e) {
-    e.preventDefault();
+  handleCowDelete() {
     this.props.deleteOne(this.props.cow._id);
   }
 
@@ -32,10 +31,14 @@ class CowListEntry extends React.Component {
     })
   }
 
-  handleEditSubmit(e) {
-    e.preventDefault();
-    this.props.editOne(this.props.cow._id, this.state.name, this.state.description);
-    this.setState({edit: false});
+  handleEditSubmit() {
+    if (this.state.name.length === 0 || this.state.description.length === 0 ) {
+      alert('Please complete the form')
+    } else {
+      alert('You edited cow: ' + this.state.name);
+      this.props.editOne(this.props.cow._id, this.state.name, this.state.description);
+      this.setState({edit: false});
+    }
   }
 
   handleNameClick() {

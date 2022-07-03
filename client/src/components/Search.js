@@ -17,16 +17,14 @@ class Search extends React.Component {
     })
   }
 
-  handleSearchSubmit(e) {
-    e.preventDefault();
+  handleSearchSubmit() {
     this.props.onSearchSubmit(this.state.term);
     this.setState({
       term: ''
     })
   }
 
-  clearSearchFilter(e) {
-    e.preventDefault();
+  clearSearchFilter() {
     this.props.onSearchSubmit('');
   }
 

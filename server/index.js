@@ -1,22 +1,20 @@
 const express = require('express');
+const path = require('path');
 const readline = require('readline').createInterface({
   input: process.stdin,
   output: process.stdout
 })
+
 const Cow = require('./controllers/index.js')
 
-let db;
-
-const path = require('path');
-
-const PORT = 3000;
 const app = express();
 app.use(express.json());
 app.use(express.static(path.join(__dirname, '..', 'public')));
 
-// app.get('/', (req, res) => {
-//   res.send('Hello from the server!');
-// })
+
+app.get('/', (req, res) => {
+  res.send('Hello from the server!');
+})
 
 app.get('/api/cows', (req, res) => {
   Cow.readAll()
@@ -31,14 +29,13 @@ app.post('/api/cows', (req, res) => {
   Cow.createOne(req.body)
   .then(data => {
     Cow.readAll()
-      .then(result => res.status(200).json(result))
+      .then(result => res.status(201).json(result))
       .catch(err => res.status(400).send(err))
   })
   .catch(() => res.status(400).end('Unable to save your cow :('))
 })
 
 app.put('/api/cows/:id', (req, res) => {
-  console.log(req.body)
   Cow.editOne(req.params.id, req.body.name, req.body.description )
   .then(data => {
     Cow.readAll()
@@ -51,13 +48,16 @@ app.put('/api/cows/:id', (req, res) => {
 app.delete('/api/cows/:id', (req, res) => {
   Cow.deleteOne(req.params.id)
   .then(data =>  {
-    console.log(data, '1111')
     Cow.readAll()
     .then(result => res.status(200).json(result))
     .catch(err => res.status(400).send(err))
   })
   .catch(() => res.status(404).end(`Unable to delete the record :(`))
 })
+
+
+let db;
+const PORT = 3000;
 
 app.listen(PORT, () => {
   console.log(`Server listening at localhost:${3000}!`);

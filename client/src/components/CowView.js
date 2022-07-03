@@ -7,15 +7,15 @@ const CowView = ({ cows, currCowId }) => {
   return (
     <div>
       {currCowId.length !== 0 ? (
-        <div>
-        <h2>
+      <div>
+        <h3>
           Name: {currCow[0].name}
-        </h2>
-        <h2>
+        </h3>
+        <h3>
           Description: {currCow[0].description}
-        </h2>
+        </h3>
       </div>
-      ): (<></>)}
+      ) : (<></>)}
     </div>
   )
 }
