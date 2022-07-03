@@ -29,19 +29,32 @@ app.get('/api/cows', (req, res) => {
 
 app.post('/api/cows', (req, res) => {
   Cow.createOne(req.body)
-  .then(() => res.status(201).end(`Your cow ${req.body.name} is saved!`))
+  .then(data => {
+    Cow.readAll()
+      .then(result => res.status(200).json(result))
+      .catch(err => res.status(400).send(err))
+  })
   .catch(() => res.status(400).end('Unable to save your cow :('))
 })
 
 app.put('/api/cows/:id', (req, res) => {
   Cow.editOne(req.params.id, req.body.name, req.body.description )
-  .then(() => res.status(200).end(`Record updated!`))
+  .then(data => {
+    Cow.readAll()
+    .then(result => res.status(200).json(result))
+    .catch(err => res.status(400).send(err))
+  })
   .catch(() => res.status(404).end('Unable to update the record :('))
 })
 
 app.delete('/api/cows/:id', (req, res) => {
   Cow.deleteOne(req.params.id)
-  .then(() => res.status(204).end(`You delete ${req.body.name}!`))
+  .then(data =>  {
+    console.log(data, '1111')
+    Cow.readAll()
+    .then(result => res.status(200).json(result))
+    .catch(err => res.status(400).send(err))
+  })
   .catch(() => res.status(404).end(`Unable to delete the record :(`))
 })
 

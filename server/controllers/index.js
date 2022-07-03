@@ -7,13 +7,11 @@ module.exports = {
 
   createOne: (body) => {
     const {name, description} = body;
-    Cow.create({name, description});
-    const all = Cow.find({});
-    return all;
+    return Cow.create({name, description});
   },
 
   editOne: (id, name, description) => {
-    return Cow.findOneAndUpdate(id, {name: name, description: description});
+    return Cow.findByIdAndUpdate(id, {name, description});
   },
 
   deleteOne: (id) => {
