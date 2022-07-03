@@ -1,7 +1,7 @@
 import React from 'react';
 import CowListEntry from './CowListEntry';
 
-const CowList = ({ cows, deleteOne, editOne }) => {
+const CowList = ({ cows, deleteOne, editOne, onCowClick }) => {
   return (
     <div>
       <h2>Cow List</h2>
@@ -11,6 +11,7 @@ const CowList = ({ cows, deleteOne, editOne }) => {
         cow={cow}
         deleteOne={deleteOne}
         editOne={editOne}
+        onCowClick={onCowClick}
       />
       )}
     </div>

@@ -3,15 +3,18 @@ import axios from 'axios';
 import Search from './components/Search';
 import CowList from './components/CowList';
 import Form from './components/Form';
+import CowView from './components/CowView'
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       cows: [],
-      search: ''
+      search: '',
+      currCowId: ''
     }
-    this.handleSearchInputChange = this.handleSearchInputChange.bind(this);
+    this.onSearchSubmit = this.onSearchSubmit.bind(this);
+    this.onCowClick = this.onCowClick.bind(this);
     this.createOne = this.createOne.bind(this);
     this.deleteOne = this.deleteOne.bind(this);
     this.editOne = this.editOne.bind(this);
@@ -23,8 +26,12 @@ class App extends React.Component {
       .catch(error => console.log(error))
   }
 
-  handleSearchInputChange(term) {
+  onSearchSubmit(term) {
     this.setState({search: term})
+  }
+
+  onCowClick(id) {
+    this.setState({currCowId: id})
   }
 
   createOne(newObj) {
@@ -40,7 +47,6 @@ class App extends React.Component {
   }
 
   editOne(id, name, description) {
-    console.log( {name, description})
     axios.put('/api/cows/' + id, {name, description})
       .then(response => this.setState({cows: response.data}))
       .catch(error => console.log(error))
@@ -56,8 +62,9 @@ class App extends React.Component {
 
     return (
       <div>
-        <Search handleSearchInputChange={this.handleSearchInputChange} />
-        <CowList cows={cowsToRender} deleteOne={this.deleteOne} editOne={this.editOne} />
+        <CowView cows={this.state.cows} currCowId={this.state.currCowId} />
+        <Search onSearchSubmit={this.onSearchSubmit} />
+        <CowList cows={cowsToRender} deleteOne={this.deleteOne} editOne={this.editOne} onCowClick={this.onCowClick} />
         <Form createOne={this.createOne} />
       </div>
     )

@@ -24,8 +24,12 @@ class Form extends React.Component {
       alert('Please complete the form')
     } else {
       alert('You add a new cow: ' + this.state.name);
-      event.preventDefault();
+      e.preventDefault();
       this.props.createOne(this.state);
+      this.setState({
+        name: '',
+        description: ''
+      })
     }
   }
 
@@ -39,6 +43,7 @@ class Form extends React.Component {
             <input
             name="name"
             type="text"
+            value={this.state.name}
             onChange={this.handleFormInputChange}
             />
           </label>
@@ -47,6 +52,7 @@ class Form extends React.Component {
             <input
             name="description"
             type="text"
+            value={this.state.description}
             onChange={this.handleFormInputChange}
             />
           </label>

@@ -12,6 +12,7 @@ class CowListEntry extends React.Component {
     this.handleEditClick = this.handleEditClick.bind(this);
     this.handleEditChange = this.handleEditChange.bind(this);
     this.handleEditSubmit = this.handleEditSubmit.bind(this);
+    this.handleNameClick = this.handleNameClick.bind(this);
   }
 
   handleCowDelete(e) {
@@ -33,12 +34,12 @@ class CowListEntry extends React.Component {
 
   handleEditSubmit(e) {
     e.preventDefault();
-    this.props.editOne({
-      id: this.props.cow._id,
-      name: this.state.name,
-      description: this.state.description
-    });
+    this.props.editOne(this.props.cow._id, this.state.name, this.state.description);
     this.setState({edit: false});
+  }
+
+  handleNameClick() {
+    this.props.onCowClick(this.props.cow._id);
   }
 
   render() {
@@ -46,7 +47,7 @@ class CowListEntry extends React.Component {
     if (!this.state.edit) {
       return (
         <div>
-          <h3>{name}</h3>
+          <h3 onClick={this.handleNameClick}>{name}</h3>
           <button onClick={this.handleEditClick}>Edit</button>
           <button onClick={this.handleCowDelete}>Delete</button>
         </div>
@@ -66,7 +67,7 @@ class CowListEntry extends React.Component {
             placeholder={description}
             onChange={this.handleEditChange}
           />
-          <button onSubmit={this.handleEditSubmit}>Submit</button>
+          <button onClick={this.handleEditSubmit}>Submit</button>
           <button onClick={this.handleCowDelete}>Delete</button>
         </div>
       )

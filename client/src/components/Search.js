@@ -7,9 +7,9 @@ class Search extends React.Component {
       term: ''
     }
     this.handleInputChange = this.handleInputChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleSearchSubmit = this.handleSearchSubmit.bind(this);
+    this.clearSearchFilter = this.clearSearchFilter.bind(this);
   }
-
 
   handleInputChange(e) {
     this.setState({
@@ -17,12 +17,17 @@ class Search extends React.Component {
     })
   }
 
-  handleSubmit(e) {
-    e.preventDefault()
-    this.props.handleSearchInputChange(this.state.term)
+  handleSearchSubmit(e) {
+    e.preventDefault();
+    this.props.onSearchSubmit(this.state.term);
     this.setState({
       term: ''
     })
+  }
+
+  clearSearchFilter(e) {
+    e.preventDefault();
+    this.props.onSearchSubmit('');
   }
 
   render() {
@@ -34,10 +39,8 @@ class Search extends React.Component {
           value={this.state.term}
           onChange={this.handleInputChange}
         />
-        <input
-          type="submit"
-          onClick={this.handleSubmit}
-        />
+        <button onClick={this.handleSearchSubmit}>Submit</button>
+        <button onClick={this.clearSearchFilter}>Back</button>
       </div>
     )
   }

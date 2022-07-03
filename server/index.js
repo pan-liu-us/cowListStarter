@@ -22,7 +22,7 @@ app.get('/api/cows', (req, res) => {
   Cow.readAll()
   .then((data) => {
     res.json(data)
-    res.send(200).end()
+    res.status(200).end()
   })
   .catch(err => console.log(err))
 })
@@ -38,6 +38,7 @@ app.post('/api/cows', (req, res) => {
 })
 
 app.put('/api/cows/:id', (req, res) => {
+  console.log(req.body)
   Cow.editOne(req.params.id, req.body.name, req.body.description )
   .then(data => {
     Cow.readAll()
