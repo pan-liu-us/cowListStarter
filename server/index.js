@@ -5,7 +5,7 @@ const readline = require('readline').createInterface({
   output: process.stdout
 })
 
-const Cow = require('./controllers/index.js')
+const Cow = require('./models/cow.js')
 
 const app = express();
 app.use(express.json());
