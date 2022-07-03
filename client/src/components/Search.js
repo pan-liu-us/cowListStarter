@@ -28,6 +28,7 @@ class Search extends React.Component {
   render() {
     return (
       <div>
+        <h2>Search For A Cow</h2>
         <input
           type="text"
           value={this.state.term}
